@@ -17,7 +17,7 @@ def message(request):
     return_json_str = json.loads(answer)
     return_str = return_json_str['userRequest']['utterance']
 
-    if return_str == '테스트':
+    if return_str == '안녕':
         return JsonResponse({
             'version': "2.0",
             'template': {
