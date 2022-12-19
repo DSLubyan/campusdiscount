@@ -15,7 +15,7 @@ def keyboard(request):
 def message(request):
     answer = (request.body.decode('utf-8'))
     return_json_str = json.loads(answer)
-    return_str = return_json_str['utterance']
+    return_str = return_json_str['userRequest']['utterance']
 
     if return_str == 'test':
         return JsonResponse({
@@ -26,10 +26,16 @@ def message(request):
                         'text': "테스트 성공입니다."
                     }
                 }],
-                'quickReplies': [{
-                    'label': '처음으로',
-                    'action': 'message',
-                    'messageText': '처음으로'
-                }]
+            }
+        })
+    else:
+        return JsonResponse({
+            'version': "2.0",
+            'template': {
+                'outputs': [{
+                    'simpleText': {
+                        'text': "테스트 실패입니다."
+                    }
+                }],
             }
         })
