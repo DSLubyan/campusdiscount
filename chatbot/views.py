@@ -13,7 +13,7 @@ def keyboard(request):
     })
 @csrf_exempt
 def message(request):
-    answer = (request.body.decode('utf-8'))
+    answer = ((request.body).decode('utf-8'))
     return_json_str = json.loads(answer)
     return_str = return_json_str['userRequest']['utterance']
 

@@ -21,5 +21,5 @@ import chatbot.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('keyboard/',chatbot.views.keyboard),
-    path('message/',chatbot.views.message)
+    path('message', chatbot.views.message)
 ]
