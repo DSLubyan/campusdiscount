@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "template": {
+    "outputs": [
+      {
+        "carousel": {
+          "type": "basicCard",
+          "items": [
+            {
+              "title": "",
+              "description": "",
+              "thumbnail": {
+                "imageUrl": ""
+              },
+              "buttons": [
+                {
+                  "action": "webLink",
+                  "label": "네이버지도 열기",
+                  "webLinkUrl": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
