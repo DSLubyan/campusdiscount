@@ -88,8 +88,6 @@ def message(request):
 
                         j["description"] = store.contents  # 메세지 본문
                         j["thumbnail"]["imageUrl"] = "https://campusdiscount.azurewebsites.net/media/" + str(store.first_menu_image)  # 메세지 이미지
-                        j["thumbnail"]["width"] = 800
-                        j["thumbnail"]["height"] = 800
 
                         for k in j["buttons"]:
                             k["webLinkUrl"] = store.naver_map_URL  # 네이버지도 URL버튼

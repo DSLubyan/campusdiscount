@@ -10,7 +10,9 @@
               "title": "",
               "description": "",
               "thumbnail": {
-                "imageUrl": ""
+                "imageUrl": "",
+                "width" : 800,
+                "height" : 800
               },
               "buttons": [
                 {
