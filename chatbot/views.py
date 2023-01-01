@@ -28,14 +28,13 @@ def message(request):
     userRequest_Text = userRequest_Json['userRequest']['utterance']
     userRequest_User_ID = userRequest_Json['userRequest']['user']['id']
     User_Vaild = User_Model.objects.filter(user_id=userRequest_User_ID)
-
     if (userRequest_Block == "setup"):  # 블록 이름 확인
         if request.method == 'POST':
-            if (User_Vaild == False):  # 이미 있는 유저인지 확인
+            if (len(User_Vaild) == False):  # 이미 있는 유저인지 확인
                 obj = User_Model(department=userRequest_Text, user_id=userRequest_User_ID)
                 obj.save()
                 User_Vaild = User_Model.objects.filter(user_id=userRequest_User_ID)
-                if (User_Vaild == True):
+                if (len(User_Vaild) == True):
                     return JsonResponse({
                         'version': "2.0",
                         'template': {
@@ -46,17 +45,17 @@ def message(request):
                             }],
                         }
                     })
-                else:
-                    return JsonResponse({
-                        'version': "2.0",
-                        'template': {
-                            'outputs': [{
-                                'simpleText': {
-                                    'text': "이미 세팅이 되어있습니다"
-                                }
-                            }],
-                        }
-                    })
+            else:
+                return JsonResponse({
+                    'version': "2.0",
+                    'template': {
+                        'outputs': [{
+                            'simpleText': {
+                                'text': "이미 세팅이 되어있습니다"
+                            }
+                        }],
+                    }
+                })
 
     elif userRequest_Block == 'search':
         return JsonResponse({
@@ -71,7 +70,7 @@ def message(request):
         })
     elif userRequest_Block == 'restaurant':
         User_Vaild = User_Model.objects.filter(user_id=userRequest_User_ID)
-        if(User_Vaild):
+        if (User_Vaild):
             for store in Store_Model.objects.filter(favorite=True):
                 fileDir = os.path.join(settings.MEDIA_ROOT, 'json')
                 print(fileDir)
@@ -88,10 +87,10 @@ def message(request):
                             j["title"] = store.store_name + " " + store.first_menu_name  # 메세지 제목 가게이름+메뉴
 
                         j["description"] = store.contents  # 메세지 본문
-                        j["thumbnail"]["imageUrl"] = "https://campusdiscount.azurewebsites.net/media/" + str(store.first_menu_image)  # 메세지 이미지
+                        j["thumbnail"]["imageUrl"] = "https://campusdiscount.azurewebsites.net/media/" + str(
+                            store.first_menu_image)  # 메세지 이미지
                         for k in j["buttons"]:
                             k["webLinkUrl"] = store.naver_map_URL  # 네이버지도 URL버튼
-
 
                 return JsonResponse(json_res)
         else:
