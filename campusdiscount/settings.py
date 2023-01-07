@@ -128,4 +128,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # 각 media file에 대한 URL prefix
 MEDIA_URL = '/media/'
 
-CSRF_TRUSTED_ORIGINS=['https://*.campusdiscount.azurewebsites.net']
