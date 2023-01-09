@@ -12,7 +12,8 @@ from campusdiscount import settings
 from chatbot.forms import UserForm
 from chatbot.models import User_Model, Store_Model
 
-
+import sys
+from importlib import reload
 # Create your views here.
 def keyboard(request):
     return JsonResponse({
@@ -75,6 +76,8 @@ def message(request):
                 fileDir = os.path.join(settings.MEDIA_ROOT, 'json')
                 print(fileDir)
                 fileName = "restaurant.json"
+                reload(sys)
+                sys.setdefaultencoding('utf-8')
                 with open(os.path.join(fileDir, fileName), 'r', encoding='utf-8') as file:
                     json_res = json.load(file)
                 data = json_res["template"]["outputs"][0]
