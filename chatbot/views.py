@@ -75,7 +75,7 @@ def message(request):
                 fileDir = os.path.join(settings.MEDIA_ROOT, 'json')
                 print(fileDir)
                 fileName = "restaurant.json"
-                with open(os.path.join(fileDir, fileName), 'r') as file:
+                with open(os.path.join(fileDir, fileName), 'r', encoding='utf-8') as file:
                     json_res = json.load(file)
                 data = json_res["template"]["outputs"][0]
                 for i in data.values():
