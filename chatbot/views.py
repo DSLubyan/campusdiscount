@@ -12,8 +12,6 @@ from campusdiscount import settings
 from chatbot.forms import UserForm
 from chatbot.models import User_Model, Store_Model
 
-import sys
-from importlib import reload
 # Create your views here.
 def keyboard(request):
     return JsonResponse({
@@ -23,19 +21,19 @@ def keyboard(request):
 
 @csrf_exempt
 def message(request):
-    answer = ((request.body).decode('utf-8'))
+    answer = (request.body.decode('utf-8'))
     userRequest_Json = json.loads(answer)
     userRequest_Block = userRequest_Json['userRequest']['block']['name']
     userRequest_Text = userRequest_Json['userRequest']['utterance']
     userRequest_User_ID = userRequest_Json['userRequest']['user']['id']
     User_Vaild = User_Model.objects.filter(user_id=userRequest_User_ID)
-    if (userRequest_Block == "setup"):  # 블록 이름 확인
+    if userRequest_Block == "setup":  # 블록 이름 확인
         if request.method == 'POST':
-            if (len(User_Vaild) == False):  # 이미 있는 유저인지 확인
+            if not len(User_Vaild):  # 이미 있는 유저인지 확인
                 obj = User_Model(department=userRequest_Text, user_id=userRequest_User_ID)
                 obj.save()
                 User_Vaild = User_Model.objects.filter(user_id=userRequest_User_ID)
-                if (len(User_Vaild) == True):
+                if len(User_Vaild):
                     return JsonResponse({
                         'version': "2.0",
                         'template': {
@@ -71,13 +69,11 @@ def message(request):
         })
     elif userRequest_Block == 'restaurant':
         User_Vaild = User_Model.objects.filter(user_id=userRequest_User_ID)
-        if (User_Vaild):
+        if User_Vaild:
             for store in Store_Model.objects.filter(favorite=True):
                 fileDir = os.path.join(settings.MEDIA_ROOT, 'json')
                 print(fileDir)
                 fileName = "restaurant.json"
-                reload(sys)
-                sys.setdefaultencoding('utf-8')
                 with open(os.path.join(fileDir, fileName), 'r', encoding='utf-8') as file:
                     json_res = json.load(file)
                 data = json_res["template"]["outputs"][0]
